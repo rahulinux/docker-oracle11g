@@ -58,6 +58,8 @@ Show the log file...
 
 bash-4.1# /opt/oraInventory/orainstRoot.sh
 bash-4.1# /opt/oracle/product/11.2.0/dbhome_1/root.sh
+bash-4.1# cp /shared/database/response/netca.rsp /opt/oracle/
+bash-4.1# cp /shared/database/response/dbca.rsp /opt/oracle/
 
 bash-4.1# exit
 

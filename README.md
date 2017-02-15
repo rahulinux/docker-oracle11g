@@ -16,7 +16,7 @@ http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.ht
 
 Clone this repository to the local directory.  Move the "database" directory to the same folder.
 ```
-$ git clone https://github.com/gcusnieux/docker-oracle11g
+$ git clone https://github.com/rahulinux/docker-oracle11g/
 $ cd docker-oracle11g
  ```
 
@@ -35,9 +35,9 @@ Image was created in the following way:
 
 
 ```
-$ sudo docker build -t gcusnieux/oracle11g .
+$ sudo docker build -t oracle11g .
    
-$ sudo docker run -d -p 0.0.0.0:2222:22 -v /$path/docker-oracle11g:/shared -e ROOT_PASS="mySshPassword" -t gcusnieux/oracle
+$ sudo docker run -d -p 0.0.0.0:2222:22 -v $PWD/docker-oracle11g:/shared -e ROOT_PASS="mySshPassword" -t oracle11g
 
 ```
 
@@ -46,7 +46,7 @@ $ sudo docker run -d -p 0.0.0.0:2222:22 -v /$path/docker-oracle11g:/shared -e RO
 
 Install Database.
 ```
-$ ssh -p 2222 root@0.0.0.0
+$ ssh -p 2222 root@localhost
 
 bash-4.1# su - oracle
 
@@ -65,55 +65,10 @@ $ sudo docker restart <CONTAINER_ID>
 
 ```
 
-Create listener using netca.
+## Check docker logs, it will take 5-10 minutes to starting oracle and creating db
+
 ```
-$ ssh -p 2222 root@0.0.0.0
-
-bash-4.1# su - oracle
-
-[oracle@localhost ~]$ export DISPLAY=hostname:0.0
-[oracle@localhost ~]$ netca -silent -responseFile /shared/database/response/netca.rsp
-
-Parsing command line arguments:
-    Parameter "silent" = true
-    Parameter "responsefile" = /shared/database/response/netca.rsp
-Done parsing command line arguments.
-Oracle Net Services Configuration:
-Profile configuration complete.
-Oracle Net Listener Startup:
-    Running Listener Control: 
-      /opt/oracle/product/11.2.0/dbhome_1/bin/lsnrctl start LISTENER
-    Listener Control complete.
-    Listener started successfully.
-Listener configuration complete.
-Oracle Net Services configuration successful. The exit code is 0
-```
-
-Create Database.
-```
-[oracle@localhost ~]$ dbca -silent -createDatabase -responseFile /shared/dbca.rsp
-Copying database files
-1% complete
-3% complete
-11% complete
-18% complete
-37% complete
-Creating and starting Oracle instance
-40% complete
-45% complete
-50% complete
-55% complete
-56% complete
-60% complete
-62% complete
-Completing Database Creation
-66% complete
-70% complete
-73% complete
-85% complete
-96% complete
-100% complete
-Look at the log file "/opt/oracle/cfgtoollogs/dbca/orcl/orcl.log" for further details.
+$ sudo docker logs <CONTAINER_ID>
 ```
 
 Test connection.
